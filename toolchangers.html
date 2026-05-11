@@ -3521,6 +3521,34 @@ error at startup if they share any index values.</p>
                 
                 
               
+<hr>
+<h2 id="u1-ace-openams-fps-overview">U1, ACE, OpenAMS, and FPS Buffer (AFC U1 Branch)</h2>
+<p>The U1_AFC branch adds dedicated AFC unit support for Snapmaker U1 toolchangers, Anycubic ACE units, OpenAMS units, and FPS analog buffer sensors.</p>
+<h3 id="afc_ace-unit"><code>[AFC_ACE]</code> Unit</h3>
+<p>Use <code>[AFC_ACE name]</code> when a lane is driven by ACE PRO hardware instead of a Klipper stepper. Configure <code>serial_port</code>, movement speeds, and feed/retract lengths on the unit, then assign lanes with <code>unit: Ace_1:&lt;slot&gt;</code>. ACE lanes can run in combined or direct pathing and support <code>pin_tool_start: internal</code> for firmware-driven engagement checks.</p>
+<h3 id="afc_openams-unit"><code>[AFC_OpenAMS]</code> Unit</h3>
+<p>Use <code>[AFC_OpenAMS name]</code> for OpenAMS hardware-managed lanes. The OpenAMS unit manages follower control, encoder/FPS monitoring, and stuck-spool/clog detection thresholds. Lanes reference the unit using standard <code>[AFC_lane]</code> <code>unit</code> syntax and can share virtual or physical hubs depending on hardware.</p>
+<h3 id="afc_fps-buffer"><code>[AFC_FPS]</code> Buffer</h3>
+<p><code>[AFC_FPS name]</code> is an analog buffer type that reads an ADC pin (0.0-1.0) and controls tension around a set point. For stepper-based lanes, FPS adjusts effective rotation distance with high/low multipliers; for firmware-driven units (ACE/OpenAMS) it provides pressure state, thresholds, and software endstops used during load and homing.</p>
+<div class="language-ini highlight"><pre><span></span><code>[AFC_FPS fps_tool0]
+adc_pin: mcu:PA0
+set_point: 0.50
+low_point: 0.10
+high_point: 0.90
+multiplier_high: 1.15
+multiplier_low: 0.85
+trailing_min_multiplier: 1.05
+</code></pre></div>
+<h3 id="u1-toolchanger-macros">U1 Toolchanger Macros</h3>
+<p>The U1 workflow typically uses toolhead-specific post-load and unload macros so AFC can hand off cutting/purging routines cleanly:</p>
+<div class="language-ini highlight"><pre><span></span><code>[gcode_macro AFC_TOOL_UNLOAD_U1]
+# Retract/cut/clean sequence for a docked U1 tool
+
+[gcode_macro AFC_TOOL_LOAD_U1]
+# Purge/prime/clean sequence after load to U1 tool
+</code></pre></div>
+<p>When migrating an existing toolchanger config, keep your existing <code>[AFC_Toolchanger]</code> and <code>[AFC_extruder]</code> sections, then swap lane <code>unit</code>/<code>buffer</code> definitions to the new ACE/OpenAMS/FPS objects where required.</p>
+
               Thanks for your feedback! Help us improve this page by using our <a href="https://github.com/ArmoredTurtle/AT-Documentation/issues/new/?title=[Feedback]+Toolchanger%20Configuration+-+/afc-klipper-add-on/toolchangers.html" target="_blank" rel="noopener">feedback form</a>.
             </div>
           
