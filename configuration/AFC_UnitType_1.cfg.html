@@ -4050,8 +4050,71 @@ for a ViViD unit.<br>
 </span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="c1">#    Default: 800</span>
 </span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="c1">#    Max movement in mm to try to move selector to specified lane.</span>
 </span></code></pre></div>
+<h2 id="afc_ace-unit_name-section">[AFC_ACE unit_name] Section<a class="headerlink" href="#afc_ace-unit_name-section" title="Permanent link">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">U1 branch</p>
+<p><code>[AFC_ACE]</code> ships on the AFC U1 branch of the AFC-Klipper-Add-On.</p>
+</div>
+<p>The following options are available in the <code>[AFC_ACE unit_name]</code> section of the <code>AFC_UnitType_1.cfg</code> file. These
+options control the configuration of the AFC system when interfacing with an Anycubic ACE PRO unit. This section
+defines the unit name and serial connection used to talk to the ACE hardware; lanes reference the unit with
+<code>unit: &lt;unit_name&gt;:&lt;slot&gt;</code> just like any other AFC unit.</p>
+<p>AFC_ACE inherits configuration options from AFC_BoxTurtle configuration section, below are additional configuration values
+for an ACE unit.<br>
+</p><div class="language-cfg highlight"><pre><span></span><code>[AFC_ACE ACE_1]
+serial:
+#    Serial device used to communicate with the ACE PRO unit.
+#    Typically a /dev/serial/by-id/... path.
+feed_speed: 50
+#    Default: 50
+#    Speed in mm/s for ACE feed moves during load operations.
+retract_speed: 50
+#    Default: 50
+#    Speed in mm/s for ACE retract moves during unload operations.
+toolhead_sensor_to_extruder_distance: 0
+#    Default: 0
+#    Distance in mm from the ACE toolhead sensor to the extruder gears.
+park_to_toolhead_distance: 0
+#    Default: 0
+#    Distance in mm from the ACE park position to the toolhead sensor.
+enable_sensors_in_gui: True
+#    Default: True
+#    Set to True to show ACE prep and load sensors as filament sensors
+#    in Mainsail/Fluidd gui, overrides value set in AFC.cfg.
+</code></pre></div>
+<h2 id="afc_openams-unit_name-section">[AFC_OpenAMS unit_name] Section<a class="headerlink" href="#afc_openams-unit_name-section" title="Permanent link">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">U1 branch</p>
+<p><code>[AFC_OpenAMS]</code> ships on the AFC U1 branch of the AFC-Klipper-Add-On.</p>
+</div>
+<p>The following options are available in the <code>[AFC_OpenAMS unit_name]</code> section of the <code>AFC_UnitType_1.cfg</code> file. These
+options control the configuration of the AFC system when interfacing with an OpenAMS unit. OpenAMS provides
+hardware-managed lane selection and follower control with FPS-assisted feeding; AFC delegates the low-level motion
+to the OpenAMS module while keeping the standard lane/hub/extruder abstractions.</p>
+<p>AFC_OpenAMS inherits configuration options from AFC_BoxTurtle configuration section, below are additional configuration values
+for an OpenAMS unit.<br>
+</p><div class="language-cfg highlight"><pre><span></span><code>[AFC_OpenAMS OAMS_1]
+fps:
+#    Name of the [AFC_FPS] section paired with this OpenAMS unit. The same
+#    FPS name should be referenced from the matching [AFC_extruder] buffer option.
+hub:
+#    Name of the [AFC_hub] section associated with this OpenAMS unit, if any.
+follower_speed: 200
+#    Default: 200
+#    Speed in mm/s used by the OpenAMS follower during feed/retract.
+load_speed: 50
+#    Default: 50
+#    Speed in mm/s used when loading filament from a lane to the hub/extruder.
+unload_speed: 50
+#    Default: 50
+#    Speed in mm/s used when unloading filament back to the lane.
+enable_sensors_in_gui: True
+#    Default: True
+#    Set to True to show OpenAMS prep and load sensors as filament sensors
+#    in Mainsail/Fluidd gui, overrides value set in AFC.cfg.
+</code></pre></div>
 <h2 id="servo-tool_cut-section">[servo tool_cut] Section<a class="headerlink" href="#servo-tool_cut-section" title="Permanent link">¶</a></h2>
-<p>The following options are available for all units (BoxTurtle, HTLF, and NightOwl) and allow for the configuration and 
+<p>The following options are available for all units (BoxTurtle, HTLF, and NightOwl) and allow for the configuration and
 operation of a gantry mounted servo to assist in tool cutting. </p>
 <div class="language-cfg highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">[servo tool_cut]</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1">#--=================================================================================--#</span>

@@ -3445,7 +3445,93 @@ error at startup if they share any index values.</p>
 <td>No</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+<hr>
+<h2 id="u1-toolchanger">U1 Toolchanger<a class="headerlink" href="#u1-toolchanger" title="Permanent link">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">U1 support requires the AFC U1 branch</p>
+<p>U1 toolchanger support ships on the U1 branch of the AFC-Klipper-Add-On.
+Ensure you are running that branch before applying the configuration below.</p>
+</div>
+<p>The U1 is a parked/docked multi-toolhead toolchanger (Snapmaker U1 and U1-compatible
+designs). Each tool sits in a dock and is picked up by the gantry; AFC manages
+the filament side of every toolhead and coordinates with the tool swap so that
+the correct extruder is loaded, unloaded, or held while the gantry parks or
+fetches a tool.</p>
+<p>U1 toolchangers use the same <code>[AFC_Toolchanger]</code> + <code>[AFC_extruder]</code> flow as the
+other toolchangers documented above. Each docked toolhead is represented by its
+own <code>[AFC_extruder]</code> section, and lanes are wired to those extruders using one of
+the three connection modes (<strong>Direct</strong>, <strong>Direct Load</strong>, or <strong>Hub</strong>). Standalone
+toolheads with no AFC lane are also supported on the U1.</p>
+<h3 id="u1-required-configuration"><code>[AFC_Toolchanger]</code> for U1<a class="headerlink" href="#u1-required-configuration" title="Permanent link">¶</a></h3>
+<p>Define one <code>[AFC_Toolchanger]</code> per printer and list each U1 docked tool by name.
+The names you use here must match the <code>[AFC_extruder]</code> sections for each tool.</p>
+<div class="language-ini highlight"><pre><span></span><code>[AFC_Toolchanger U1]
+type:                U1
+tool_count:          4
+tools:               extruder, extruder1, extruder2, extruder3
+tool_change_macro:   T_CHANGE
+custom_tool_unselect: AFC_TOOL_UNLOAD_U1
+custom_tool_select:   AFC_TOOL_LOAD_U1
+</code></pre></div>
+<p>Set <code>tool_count</code> to the number of physical U1 docks you are using. The
+<code>custom_tool_select</code> / <code>custom_tool_unselect</code> options are optional and let you
+inject U1-specific purge, prime, wipe, or park behavior around each swap.</p>
+<h3 id="u1-extruders-and-lanes">U1 Extruders and Lanes<a class="headerlink" href="#u1-extruders-and-lanes" title="Permanent link">¶</a></h3>
+<p>Each U1 toolhead is its own <code>[AFC_extruder]</code> section. Wire lanes to those
+extruders using one of the three modes covered earlier on this page. Below is a
+minimal mixed example for a 4-tool U1 fed by a 4-lane unit, with one toolhead
+running standalone:</p>
+<div class="language-ini highlight"><pre><span></span><code>[AFC_extruder extruder]
+pin_tool_start: tool0:filament_switch
+
+[AFC_extruder extruder1]
+pin_tool_start: tool1:filament_switch
+
+[AFC_extruder extruder2]
+pin_tool_start: tool2:filament_switch
+
+[AFC_extruder extruder3]
+pin_tool_start: tool3:filament_switch
+# extruder3 is standalone: no lane references it; filament is loaded manually
+</code></pre></div>
+<h3 id="u1-toolchanger-macros">U1 Toolchanger Macros<a class="headerlink" href="#u1-toolchanger-macros" title="Permanent link">¶</a></h3>
+<p>U1 swaps are typically scripted with two helper macros that AFC will call
+through the <code>custom_tool_select</code> / <code>custom_tool_unselect</code> hooks. These macros are
+where you put any purge, tip-forming, retraction, or dock-cleanup behavior that
+is specific to a U1 toolhead.</p>
+<div class="language-ini highlight"><pre><span></span><code>[gcode_macro AFC_TOOL_UNLOAD_U1]
+gcode:
+    # Called before the U1 docks a tool.
+    # Retract, tip-form, or run any cleanup needed before parking.
+    {% set tool = params.TOOL|default('extruder') %}
+    SAVE_GCODE_STATE NAME=afc_u1_unload
+    G92 E0
+    G1 E-2 F1800
+    RESTORE_GCODE_STATE NAME=afc_u1_unload
+
+[gcode_macro AFC_TOOL_LOAD_U1]
+gcode:
+    # Called after the U1 has picked up a tool.
+    # Prime/purge the freshly loaded toolhead before resuming the print.
+    {% set tool = params.TOOL|default('extruder') %}
+    SAVE_GCODE_STATE NAME=afc_u1_load
+    G92 E0
+    G1 E1 F300
+    RESTORE_GCODE_STATE NAME=afc_u1_load
+</code></pre></div>
+<p>The <code>TOOL</code> parameter is supplied by AFC and lets the same macro handle every
+docked tool. Keep the macros short and idempotent so that recovery commands can
+re-run them safely.</p>
+<h3 id="u1-summary">U1 Mode Selection Summary<a class="headerlink" href="#u1-summary" title="Permanent link">¶</a></h3>
+<p>The standard <em>Direct</em> / <em>Direct Load</em> / <em>Hub</em> / <em>Standalone</em> rules from the table
+above apply unchanged to U1 toolheads. Choose the mode per toolhead based on
+how filament reaches it:</p>
+<ul>
+<li><strong>Direct / Direct Load</strong> for one lane per U1 dock.</li>
+<li><strong>Hub</strong> when two or more lanes share a single U1 dock via an <code>[AFC_hub]</code>.</li>
+<li><strong>Standalone</strong> for U1 docks that are hand-fed (no AFC lane).</li>
+</ul></div>
 
 
 

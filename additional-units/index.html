@@ -2864,6 +2864,8 @@
 <li>NightOwl</li>
 <li>QuattroBox</li>
 <li>ViViD</li>
+<li>ACE (Anycubic ACE PRO, AFC U1 branch)</li>
+<li>OpenAMS (AFC U1 branch)</li>
 <li>etc.</li>
 </ul>
 <p>The <code>install-afc.sh</code> script has an option to install additional units. When running the script, you can select <code>A</code>
@@ -2884,6 +2886,94 @@ the myriad of different configurations that are possible.</p>
 <ul>
 <li>Manually change the lane numbering from 1-4 to 5-8, and </li>
 <li>Update all <code>AFC_Indicator_1</code> to <code>AFC_Indicator_3</code> and <code>AFC_Indicator_2</code> to <code>AFC_Indicator_4</code></li>
+</ul>
+<hr>
+<h2 id="ace-and-openams-units">ACE and OpenAMS Units<a class="headerlink" href="#ace-and-openams-units" title="Permanent link">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">U1 branch</p>
+<p>ACE and OpenAMS unit support ships on the AFC U1 branch of the
+AFC-Klipper-Add-On. The configuration patterns below apply once that branch is
+installed.</p>
+</div>
+<p>ACE and OpenAMS are additional AFC unit types and slot into the same lane/extruder
+plumbing used by <code>AFC_BoxTurtle</code>, <code>AFC_HTLF</code>, <code>AFC_NightOwl</code>, and the other Armored
+Turtle units. From AFC's point of view they are just another <em>unit</em>: lanes
+reference them with <code>unit: &lt;unit_name&gt;:&lt;lane_or_slot&gt;</code>, hubs/extruders/buffers
+continue to work the same way, and the LED / sensor / load logic is inherited from
+the existing AFC framework. The hardware-specific behavior (slot selection,
+follower control, FPS-assisted feeding, etc.) is handled inside the unit itself.</p>
+<h3 id="ace-unit">ACE Unit (Anycubic ACE PRO)<a class="headerlink" href="#ace-unit" title="Permanent link">¶</a></h3>
+<p>Use the <code>[AFC_ACE]</code> unit for Anycubic ACE PRO hardware. The ACE module connects
+over serial and exposes four slots; AFC binds each slot to an <code>AFC_stepper</code> lane
+just like a BoxTurtle lane.</p>
+<div class="language-cfg highlight"><pre><span></span><code>[AFC_ACE ACE_1]
+serial: /dev/serial/by-id/usb-ANYCUBIC_ACE-if00
+# Optional: feed/retract speeds, idle timeout, etc.
+
+[AFC_stepper lane1]
+unit: ACE_1:1
+# ...standard AFC_stepper options...
+led_index: AFC_Indicator_ACE_1:1
+
+[AFC_stepper lane2]
+unit: ACE_1:2
+led_index: AFC_Indicator_ACE_1:2
+
+[AFC_stepper lane3]
+unit: ACE_1:3
+led_index: AFC_Indicator_ACE_1:3
+
+[AFC_stepper lane4]
+unit: ACE_1:4
+led_index: AFC_Indicator_ACE_1:4
+</code></pre></div>
+<p>Wire the lanes to one or more <code>[AFC_extruder]</code> sections using any of the standard
+modes (<strong>Direct</strong>, <strong>Direct Load</strong>, or <strong>Hub</strong>) just like the other units. If you
+are pairing ACE with a toolchanger, see the
+<a href="../toolchanger/overview.html">Toolchanger Overview</a> for connection-mode rules.</p>
+<h3 id="openams-unit">OpenAMS Unit<a class="headerlink" href="#openams-unit" title="Permanent link">¶</a></h3>
+<p>Use the <code>[AFC_OpenAMS]</code> unit for OpenAMS hardware. OpenAMS is a hardware-managed
+multi-lane unit that uses follower motors and a filament-position-sensor (FPS)
+loop to feed filament smoothly. AFC delegates lane selection and follower
+control to the OpenAMS firmware while keeping the standard lane/hub/extruder
+abstractions on top.</p>
+<div class="language-cfg highlight"><pre><span></span><code>[AFC_OpenAMS OAMS_1]
+# Reference the OpenAMS-side configuration (motors, FPS, etc.)
+# already defined in your printer.cfg / OpenAMS includes.
+fps:           fps_tool0
+hub:           OAMS_1
+# Optional: follower / encoder tuning is handled by the OpenAMS module itself.
+
+[AFC_stepper lane1]
+unit: OAMS_1:1
+led_index: AFC_Indicator_OAMS_1:1
+
+[AFC_stepper lane2]
+unit: OAMS_1:2
+led_index: AFC_Indicator_OAMS_1:2
+
+[AFC_stepper lane3]
+unit: OAMS_1:3
+led_index: AFC_Indicator_OAMS_1:3
+
+[AFC_stepper lane4]
+unit: OAMS_1:4
+led_index: AFC_Indicator_OAMS_1:4
+</code></pre></div>
+<p>OpenAMS is normally paired with an <a href="../installation/buffer-overview.html#fps-buffer">FPS buffer</a>
+instead of a TurtleNeck. Point the unit at the matching <code>[AFC_FPS]</code> via the
+<code>fps</code> option above, and reference the same FPS name from your <code>[AFC_extruder]</code>
+section's <code>buffer:</code> option.</p>
+<h3 id="ace-openams-tips">Tips when adding an ACE or OpenAMS unit<a class="headerlink" href="#ace-openams-tips" title="Permanent link">¶</a></h3>
+<ul>
+<li>Keep your existing <code>[AFC_Toolchanger]</code>, <code>[AFC_extruder]</code>, and <code>[AFC_hub]</code>
+sections unchanged &mdash; only the <code>unit:</code> targets on the lanes need to point at
+the new unit.</li>
+<li>If you are mixing units (e.g. an ACE alongside a BoxTurtle), renumber the new
+unit's lanes and <code>AFC_Indicator</code> entries the same way you would for any other
+additional unit (see the example above for ViViD + BoxTurtle).</li>
+<li>OpenAMS users should make sure the <code>[AFC_FPS]</code> referenced by the unit and by
+the matching <code>[AFC_extruder]</code> use the same name.</li>
 </ul></div>
 
 

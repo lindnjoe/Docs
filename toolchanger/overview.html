@@ -2924,7 +2924,26 @@ throughout this guide are based on an HTLF unit with the following layout:</p>
 <td>A toolchanger toolhead has no AFC unit/lane attached; filament is loaded manually once filament is inserted and toolhead sensor is triggered.</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+<hr>
+<h2 id="supported-toolchangers">Supported Toolchangers<a class="headerlink" href="#supported-toolchangers" title="Permanent link">¶</a></h2>
+<p>AFC currently provides first-class integration with the following toolchanger
+systems:</p>
+<ul>
+<li><a href="https://github.com/viesturz/klipper-toolchanger">klipper-toolchanger</a>
+&mdash; the default integration. Provides <code>SELECT_TOOL</code>, <code>UNSELECT_TOOL</code>, tool
+offsets, and dock macros that AFC layers on top of.</li>
+<li><strong>U1 (Snapmaker U1 and U1-compatible parked toolchangers)</strong> &mdash;
+configured via <code>[AFC_Toolchanger]</code> with <code>type: U1</code> and per-tool
+<code>[AFC_extruder]</code> sections. See the
+<a href="../toolchangers.html#u1-toolchanger">U1 Toolchanger</a> section
+of the toolchanger configuration page for the full setup.</li>
+<li><strong>Custom / non-klipper-toolchanger</strong> &mdash; supported via user-supplied
+<code>custom_tool_select</code> / <code>custom_tool_unselect</code> macros on the
+<code>[AFC_Toolchanger]</code> section.</li>
+</ul>
+<p>U1 support is included on the AFC U1 branch; the other integrations are
+available on main.</p></div>
 
 
 

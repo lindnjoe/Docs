@@ -3437,7 +3437,124 @@ will decrease the rate filament to the primary extruder.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Buffer config section must be updated for values to be saved</p>
-</div></div>
+</div>
+<hr>
+<h2 id="fps-buffer">FPS (Filament Position Sensor) Buffer<a class="headerlink" href="#fps-buffer" title="Permanent link">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">U1 branch</p>
+<p>The <code>[AFC_FPS]</code> buffer type ships on the AFC U1 branch of the AFC-Klipper-Add-On.
+It is intended for OpenAMS-style hardware that exposes an analog pressure / position
+signal rather than two digital advance/trailing switches.</p>
+</div>
+<h3 id="fps-overview">Overview<a class="headerlink" href="#fps-overview" title="Permanent link">¶</a></h3>
+<p>An FPS buffer is an analog buffer: instead of two digital sensors (advance and
+trailing) that flip between two rotation-distance multipliers, an FPS reports a
+continuous position value (typically <code>0.0</code> &ndash; <code>1.0</code>) representing how
+compressed or expanded the buffer is. AFC uses this value to drive the secondary
+extruder's rotation distance proportionally, smoothing feed behavior compared to
+a switch-based TurtleNeck buffer.</p>
+<p>From AFC's point of view an <code>[AFC_FPS]</code> behaves like any other buffer object:
+the matching <code>[AFC_extruder]</code> references it through its <code>buffer:</code> option, and
+lanes feeding that extruder will have their rotation distance modulated by the
+FPS reading. An <code>[AFC_OpenAMS]</code> unit can also point at the same FPS via its
+<code>fps:</code> option so that follower control and AFC's rotation-distance loop stay in
+sync.</p>
+<h3 id="fps-basic-functionality">Basic Functionality<a class="headerlink" href="#fps-basic-functionality" title="Permanent link">¶</a></h3>
+<ul>
+<li>When the FPS reading is <strong>above</strong> <code>set_point</code> the buffer is expanded; AFC
+increases the secondary extruder's rotation distance (using <code>multiplier_high</code>)
+to slow filament delivery and let the buffer compress back toward the set
+point.</li>
+<li>When the FPS reading is <strong>below</strong> <code>set_point</code> the buffer is compressed; AFC
+decreases the rotation distance (using <code>multiplier_low</code>) to feed filament
+faster and let the buffer expand.</li>
+<li><code>low_point</code> and <code>high_point</code> bound the usable range of the sensor; readings
+outside this range are treated as the corresponding endstop being hit and can
+trigger a buffer fault.</li>
+</ul>
+<h3 id="fps-configuration">Configuration<a class="headerlink" href="#fps-configuration" title="Permanent link">¶</a></h3>
+<p>Add the FPS section to your <code>AFC_hardware.cfg</code> (or the appropriate include file
+for your unit) and reference it from the matching <code>[AFC_extruder]</code> / unit.</p>
+<div class="language-cfg highlight"><pre><span></span><code>[AFC_FPS fps_tool0]
+adc_pin: mcu:PA0
+#    Analog pin reporting the FPS position.
+set_point: 0.50
+#    Default: 0.50
+#    Target position (0.0 - 1.0) the buffer should hover around.
+low_point: 0.10
+#    Default: 0.10
+#    Reading at or below this value is treated as the "fully compressed" endstop.
+high_point: 0.90
+#    Default: 0.90
+#    Reading at or above this value is treated as the "fully expanded" endstop.
+multiplier_high: 1.15
+#    Default: 1.05
+#    Rotation-distance factor applied when the buffer is above set_point
+#    (feed less to let the buffer compress).
+multiplier_low: 0.85
+#    Default: 0.95
+#    Rotation-distance factor applied when the buffer is below set_point
+#    (feed more to let the buffer expand).
+trailing_min_multiplier: 1.05
+#    Default: 1.05
+#    Minimum multiplier used while AFC is in the trailing/expanding state.
+led_index: Buffer_Indicator:1
+#    Optional: AFC_led index used to visualize FPS state.
+</code></pre></div>
+<p>Reference the FPS from the toolhead's <code>[AFC_extruder]</code> the same way you would a
+TurtleNeck buffer:</p>
+<div class="language-cfg highlight"><pre><span></span><code>[AFC_extruder extruder]
+buffer: fps_tool0
+# ...other AFC_extruder options...
+</code></pre></div>
+<p>If you are using an OpenAMS unit, also point the unit at the FPS so follower
+control uses the same sensor:</p>
+<div class="language-cfg highlight"><pre><span></span><code>[AFC_OpenAMS OAMS_1]
+fps: fps_tool0
+</code></pre></div>
+<h3 id="fps-tuning">Tuning Notes<a class="headerlink" href="#fps-tuning" title="Permanent link">¶</a></h3>
+<ul>
+<li>Start with <code>set_point: 0.50</code> and the default multipliers, then watch the FPS
+reading in the GUI while printing. Small <code>multiplier_high</code> / <code>multiplier_low</code>
+values keep the loop gentle; larger values respond faster but can oscillate.</li>
+<li><code>low_point</code> and <code>high_point</code> should be set just inside the physical endstops
+of the buffer so AFC reacts before the buffer mechanically bottoms or
+fully expands.</li>
+<li>FPS buffers replace TurtleNeck for the toolheads they are wired to; you can
+still mix TurtleNeck buffers on other toolheads in the same printer.</li>
+</ul>
+<h3 id="fps-vs-turtleneck">FPS vs. TurtleNeck<a class="headerlink" href="#fps-vs-turtleneck" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TurtleNeck (<code>[AFC_buffer]</code>)</th>
+<th>FPS (<code>[AFC_FPS]</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sensor type</td>
+<td>Two digital switches (advance / trailing)</td>
+<td>Single analog ADC reading</td>
+</tr>
+<tr>
+<td>Control</td>
+<td>Two-state, high / low multiplier</td>
+<td>Proportional around <code>set_point</code></td>
+</tr>
+<tr>
+<td>Endstop support</td>
+<td>Physical switch trips</td>
+<td>Software <code>low_point</code> / <code>high_point</code></td>
+</tr>
+<tr>
+<td>Typical pairing</td>
+<td>BoxTurtle, HTLF, NightOwl, QuattroBox, ViViD</td>
+<td>OpenAMS, ACE, U1 toolheads</td>
+</tr>
+</tbody>
+</table></div>
 
 
 
