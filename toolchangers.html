@@ -3459,7 +3459,21 @@ error at startup if they share any index values.</p>
 
 
 
-  <form class="md-feedback" name="feedback" hidden>
+  <hr>
+<h2 id="u1-toolchanger-notes">U1 Toolchanger Notes (AFC U1 Branch)</h2>
+<p>For Snapmaker U1-style toolchangers, AFC keeps the standard <code>[AFC_Toolchanger]</code> + <code>[AFC_extruder]</code> flow and adds optional U1-specific load/unload macro hooks.</p>
+<h3 id="u1-toolchanger-macros">U1 Toolchanger Macros</h3>
+<div class="language-ini highlight"><pre><span></span><code>[gcode_macro AFC_TOOL_UNLOAD_U1]
+# Retract/cut/clean sequence for a docked U1 tool
+
+[gcode_macro AFC_TOOL_LOAD_U1]
+# Purge/prime/clean sequence after load to U1 tool
+</code></pre></div>
+<p>Use these when your U1 toolheads require custom post-load purge/prime or unload cut/cleanup behavior.</p>
+
+
+              
+<form class="md-feedback" name="feedback" hidden>
     <fieldset>
       <legend class="md-feedback__title">
         Was this page helpful?
@@ -3521,7 +3535,7 @@ error at startup if they share any index values.</p>
                 
                 
               
-              Thanks for your feedback! Help us improve this page by using our <a href="https://github.com/ArmoredTurtle/AT-Documentation/issues/new/?title=[Feedback]+Toolchanger%20Configuration+-+/afc-klipper-add-on/toolchangers.html" target="_blank" rel="noopener">feedback form</a>.
+Thanks for your feedback! Help us improve this page by using our <a href="https://github.com/ArmoredTurtle/AT-Documentation/issues/new/?title=[Feedback]+Toolchanger%20Configuration+-+/afc-klipper-add-on/toolchangers.html" target="_blank" rel="noopener">feedback form</a>.
             </div>
           
         </div>

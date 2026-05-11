@@ -2898,7 +2898,17 @@ the myriad of different configurations that are possible.</p>
 
 
 
-  <form class="md-feedback" name="feedback" hidden>
+  <hr>
+<h2 id="ace-and-openams-units-aFC-u1-branch">ACE and OpenAMS Units (AFC U1 Branch)</h2>
+<p>ACE and OpenAMS are AFC unit types, similar in role to <code>AFC_BoxTurtle</code> or <code>AFC_HTLF</code>: lanes point to a unit with <code>unit: &lt;unit_name&gt;:&lt;lane_or_slot&gt;</code>, and the unit owns hardware-specific motion/monitoring behavior.</p>
+<h3 id="afc_ace-unit"><code>[AFC_ACE name]</code></h3>
+<p>Use for Anycubic ACE PRO hardware. Configure serial connection and feed/retract behavior on the unit; lanes then reference ACE slots.</p>
+<h3 id="afc_openams-unit"><code>[AFC_OpenAMS name]</code></h3>
+<p>Use for OpenAMS hardware-managed lanes. OpenAMS handles follower/encoder/FPS-assisted monitoring and exposes lanes through standard AFC lane mapping.</p>
+<p>Tip: keep your existing <code>[AFC_extruder]</code>/<code>[AFC_Toolchanger]</code> sections unchanged and update lane <code>unit</code> targets to the new unit objects.</p>
+
+              
+<form class="md-feedback" name="feedback" hidden>
     <fieldset>
       <legend class="md-feedback__title">
         Was this page helpful?
@@ -2960,7 +2970,7 @@ the myriad of different configurations that are possible.</p>
                 
                 
               
-              Thanks for your feedback! Help us improve this page by using our <a href="https://github.com/ArmoredTurtle/AT-Documentation/issues/new/?title=[Feedback]+Adding%20additional%20units+-+/afc-klipper-add-on/additional-units/index.html" target="_blank" rel="noopener">feedback form</a>.
+Thanks for your feedback! Help us improve this page by using our <a href="https://github.com/ArmoredTurtle/AT-Documentation/issues/new/?title=[Feedback]+Adding%20additional%20units+-+/afc-klipper-add-on/additional-units/index.html" target="_blank" rel="noopener">feedback form</a>.
             </div>
           
         </div>
