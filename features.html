@@ -19,7 +19,7 @@
         <link rel="next" href="gui.html">
       
       
-      <link rel="icon" href="../assets/favicon-32x32.png">
+      <link rel="icon" href="https://www.armoredturtle.xyz/docs/assets/favicon-32x32.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
@@ -28,10 +28,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      <link rel="stylesheet" href="https://www.armoredturtle.xyz/docs/assets/stylesheets/main.4af4bdda.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="https://www.armoredturtle.xyz/docs/assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -50,9 +50,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="https://www.armoredturtle.xyz/docs/assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../stylesheets/extra.css">
+      <link rel="stylesheet" href="https://www.armoredturtle.xyz/docs/stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -108,7 +108,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="Armored Turtle Documentation" class="md-header__button md-logo" aria-label="Armored Turtle Documentation" data-md-component="logo">
       
-  <img src="../assets/logo.png" alt="logo">
+  <img src="https://www.armoredturtle.xyz/docs/assets/logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -431,7 +431,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Armored Turtle Documentation" class="md-nav__button md-logo" aria-label="Armored Turtle Documentation" data-md-component="logo">
       
-  <img src="../assets/logo.png" alt="logo">
+  <img src="https://www.armoredturtle.xyz/docs/assets/logo.png" alt="logo">
 
     </a>
     Armored Turtle Documentation
@@ -3379,7 +3379,7 @@ print assist: </p>
 <p>If the default values for print assist are unspooling too much you can start off by changing either <code>max_motor_rpm</code> or 
 <code>spool_ratio</code> to decrease the time that the N20 motors are active (aka cruise_time). </p>
 <p>Below is the default cruise time dependent on weight when using default variables:
-<img alt="image" src="../assets/images/print_assist_cruise_time_vs_weight.png"></p>
+<img alt="image" src="https://www.armoredturtle.xyz/docs/assets/images/print_assist_cruise_time_vs_weight.png"></p>
 <p>Formula to calculate <code>cruise_time</code>:
 </p><div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">rps</span> <span class="o">=</span> <span class="n">max_motor_rpm</span> <span class="o">/</span> <span class="mi">60</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">spool_rot_s</span> <span class="o">=</span> <span class="p">(</span><span class="n">espool_rot_dist</span> <span class="o">*</span> <span class="p">(</span><span class="n">rps</span> <span class="o">/</span> <span class="n">spool_ratio</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">spool_outer_diameter</span> <span class="o">*</span> <span class="n">PI</span><span class="p">)</span>
@@ -3424,8 +3424,8 @@ N20 active time:<br>
 <p>Once this macro is run, Moonraker's database will first be backed up just in case someone would like to restore previous stats before resetting values. This reset needs to happen for AFC to average load times correctly based on load counts.</p>
 </div>
 <p>Examples of what statistics printout looks like:<br>
-<img alt="stats_normal" src="../assets/images/afc_stats_wide.png">
-<img alt="stats_short" src="../assets/images/afc_stats_short.png"></p>
+<img alt="stats_normal" src="https://www.armoredturtle.xyz/docs/assets/images/afc_stats_wide.png">
+<img alt="stats_short" src="https://www.armoredturtle.xyz/docs/assets/images/afc_stats_short.png"></p>
 <h2 id="button-controls">Button controls<a class="headerlink" href="#button-controls" title="Permanent link">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Original Design</p>
@@ -3462,7 +3462,7 @@ N20 active time:<br>
 <p>A debounce delay can also be added so that the sensor(s) need to be low for a period of time before triggering the runout logic. By default this is set to zero but can be changed by adding <code>debounce_delay: &lt;delay_value&gt;</code> to your AFC config which is a global value. Debounce delay can also be added in AFC_extruder, AFC_hub, AFC_stepper, and AFC_lane configs which override the global AFC setting. See configuration sections for each config for more information.</p>
 <p>Runout detection can be turned off while printing by disabling sensor in web GUI. If PREP sensor is disabled this also disables infinite spool. The state of the switches is not persistent and will reset to enabled when Klipper is restarted.</p>
 <p>Example of runout enabled/disabled:
-<img alt="runout_enabled_disabled" src="../assets/images/runout_switch.png"></p>
+<img alt="runout_enabled_disabled" src="https://www.armoredturtle.xyz/docs/assets/images/runout_switch.png"></p>
 <p>Additionally, AFC supports triggering a runout based on remaining weight of the filament spool. If <code>auto_spool_switch: True</code> is set in your config, then AFC will trigger a runout if the weight of the filament spool gets below the <code>auto_spool_switch_threshold</code> value set in your config. 
 This functionality is useful when the manufacturer of a filament spool leaves a hooked end at the end of the roll, which may prevent a normal runout from triggering properly. </p>
 <h2 id="td-1-support">TD-1 Support<a class="headerlink" href="#td-1-support" title="Permanent link">¶</a></h2>
@@ -3791,12 +3791,12 @@ This functionality is useful when the manufacturer of a filament spool leaves a 
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight", "search.share", "navigation.top", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.footer", "toc.follow", "optimize"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight", "search.share", "navigation.top", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.footer", "toc.follow", "optimize"], "search": "https://www.armoredturtle.xyz/docs/assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="https://www.armoredturtle.xyz/docs/assets/javascripts/bundle.c8b220af.min.js"></script>
       
-        <script src="../javascripts/feedback.js"></script>
+        <script src="https://www.armoredturtle.xyz/docs/javascripts/feedback.js"></script>
       
     
   </body>

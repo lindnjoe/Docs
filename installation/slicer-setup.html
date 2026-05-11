@@ -19,7 +19,7 @@
         <link rel="next" href="../updates/updates.html">
       
       
-      <link rel="icon" href="../../assets/favicon-32x32.png">
+      <link rel="icon" href="https://www.armoredturtle.xyz/docs/assets/favicon-32x32.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
@@ -28,10 +28,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.2afb09e1.min.css">
+      <link rel="stylesheet" href="https://www.armoredturtle.xyz/docs/assets/stylesheets/main.4af4bdda.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="https://www.armoredturtle.xyz/docs/assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -50,9 +50,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="https://www.armoredturtle.xyz/docs/assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="https://www.armoredturtle.xyz/docs/stylesheets/extra.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -108,7 +108,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Armored Turtle Documentation" class="md-header__button md-logo" aria-label="Armored Turtle Documentation" data-md-component="logo">
       
-  <img src="../../assets/logo.png" alt="logo">
+  <img src="https://www.armoredturtle.xyz/docs/assets/logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -431,7 +431,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Armored Turtle Documentation" class="md-nav__button md-logo" aria-label="Armored Turtle Documentation" data-md-component="logo">
       
-  <img src="../../assets/logo.png" alt="logo">
+  <img src="https://www.armoredturtle.xyz/docs/assets/logo.png" alt="logo">
 
     </a>
     Armored Turtle Documentation
@@ -3224,7 +3224,7 @@ configuration of options within them is similar but naming or options may be sli
 <h4 id="updating-printer-settings-in-orca">Updating printer settings in Orca<a class="headerlink" href="#updating-printer-settings-in-orca" title="Permanent link">¶</a></h4>
 <p>For the printer you are adding your AFC unit to, first go to the Printer settings, Multimaterial tab and ensure settings are
 configured as per the below screenshot.
-<img alt="Orca_Printer_Settings" src="../../assets/images/orca-multimaterialtab.png"></p>
+<img alt="Orca_Printer_Settings" src="https://www.armoredturtle.xyz/docs/assets/images/orca-multimaterialtab.png"></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Only select the <code>Purge in prime tower</code> option when you are not using the <code>POOP</code> macro/functionality.</p>
@@ -3236,7 +3236,7 @@ configured as per the below screenshot.
 <p>Also, on the Extruder 1 setting page - reduce <code>Retraction while switching material</code> length from the default of 2 to 0.</p>
 <h4 id="adding-additional-filamentsextruders">Adding additional filaments/extruders<a class="headerlink" href="#adding-additional-filamentsextruders" title="Permanent link">¶</a></h4>
 <p>Increase the number of filaments to match your unit's lane count.
-<img alt="Orca_Add_Filament_Settings" src="../../assets/images/orca-filamentcount.png"></p>
+<img alt="Orca_Add_Filament_Settings" src="https://www.armoredturtle.xyz/docs/assets/images/orca-filamentcount.png"></p>
 <h4 id="updating-the-machine-g-code-settings">Updating the Machine G-code settings<a class="headerlink" href="#updating-the-machine-g-code-settings" title="Permanent link">¶</a></h4>
 <ul>
 <li>Set <code>Machine start G-code</code> appropriately for your printer, specifically adding the <code>TOOL={initial_tool}</code> to your <code>PRINT_START</code> macro.</li>
@@ -3282,11 +3282,11 @@ betas/release candidates) you will need to make the following additional changes
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>PRINT_START STANDBY={material_standby_temperature} BED={material_bed_temperature_layer_0} EXTRUDER={material_print_temperature_layer_0} TOOL={initial_extruder_nr}
 </span></code></pre></div>
 <h4 id="material-settings">Material Settings<a class="headerlink" href="#material-settings" title="Permanent link">¶</a></h4>
-<p><img alt="Orca_Material_Settings" src="../../assets/images/orca-filament-material-settings.png"></p>
+<p><img alt="Orca_Material_Settings" src="https://www.armoredturtle.xyz/docs/assets/images/orca-filament-material-settings.png"></p>
 <h5 id="ramming-settings">Ramming Settings<a class="headerlink" href="#ramming-settings" title="Permanent link">¶</a></h5>
 <p>Because the AFC-Klipper-Add-On handles any tip forming in the extension, we need to disable these specific settings in
 the slicer software. Below is a screenshot for OrcaSlicer, but most Slic3r-based slicers have a similar dialog/setting.
-<img alt="Orca_Ramming_Settings" src="../../assets/images/orca-ramming-settings.png"></p>
+<img alt="Orca_Ramming_Settings" src="https://www.armoredturtle.xyz/docs/assets/images/orca-ramming-settings.png"></p>
 <h3 id="other-slicers">Other slicers<a class="headerlink" href="#other-slicers" title="Permanent link">¶</a></h3>
 <p>PrusaSlicer - https://www.youtube.com/watch?v=ilxtHVNhsM4</p>
 <h2 id="print-start-macro-for-afc-klipper-add-on">Print Start Macro for AFC-Klipper Add-On<a class="headerlink" href="#print-start-macro-for-afc-klipper-add-on" title="Permanent link">¶</a></h2>
@@ -3632,12 +3632,12 @@ is <a href="https://github.com/jontek2/A-better-print_start-macro">jontek2's "A 
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight", "search.share", "navigation.top", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.footer", "toc.follow", "optimize"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight", "search.share", "navigation.top", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.tracking", "navigation.path", "navigation.footer", "toc.follow", "optimize"], "search": "https://www.armoredturtle.xyz/docs/assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="https://www.armoredturtle.xyz/docs/assets/javascripts/bundle.c8b220af.min.js"></script>
       
-        <script src="../../javascripts/feedback.js"></script>
+        <script src="https://www.armoredturtle.xyz/docs/javascripts/feedback.js"></script>
       
     
   </body>
